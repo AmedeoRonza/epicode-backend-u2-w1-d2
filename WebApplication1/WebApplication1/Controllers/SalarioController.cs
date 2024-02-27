@@ -47,12 +47,45 @@ namespace WebApplication1.Controllers
             }
             finally
             {
-                conn.Close(); // Chiudo la connessione al db, NECESSARIO
+                conn.Close(); 
             }
             return View(paymentList);            
         }
         public ActionResult Create()
         {
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult Create (Salario soldi)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ConnectionStringDB"].ConnectionString.ToString();
+            SqlConnection conn = new SqlConnection(connectionString);
+
+            try
+            {  
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand("INSERT INTO Pagamenti (Nome, Cognome, DataPagamento, Pagamento, Stipendio, Acconto) VALUES (@Nome, @Cognome, @DataPagamento, @Pagamento, @Stipendio, @Acconto)", conn);
+                cmd.Parameters.AddWithValue("@Nome", soldi.Nome);
+                cmd.Parameters.AddWithValue("@Cognome", soldi.Cognome);
+                cmd.Parameters.AddWithValue("@DataPagamento", soldi.DataPagamento);
+                cmd.Parameters.AddWithValue("@Pagamento", soldi.Pagamento);
+                cmd.Parameters.AddWithValue("@Stipendio", soldi.Stipendio);
+                cmd.Parameters.AddWithValue("@Acconto", soldi.Acconto);
+                
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Response.Write("Errore");
+                Response.Write(ex.Message);
+            }
+            finally
+            {
+                conn.Close(); 
+            }
+
             return View();
         }
     }

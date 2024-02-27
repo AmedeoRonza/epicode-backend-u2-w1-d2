@@ -184,6 +184,7 @@
     <Content Include="Views\Dipendenti\Index.cshtml" />
     <Content Include="Views\Dipendenti\Create.cshtml" />
     <Content Include="Views\Salario\Index.cshtml" />
+    <Content Include="Views\Salario\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
